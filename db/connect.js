@@ -1,10 +1,5 @@
-/* eslint-disable operator-linebreak */
-/* eslint-disable no-unused-vars */
 const mongoose = require('mongoose');
 
-const connectString = '';
+const connectDB = (url) => mongoose.connect(url);
 
-mongoose
-  .connect(connectString)
-  .then(console.log('CONNECTED TO DB'))
-  .catch((err) => console.log(err));
+module.exports = connectDB;
