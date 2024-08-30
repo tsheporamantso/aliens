@@ -2,6 +2,7 @@ const express = require('express');
 const aliens = require('./routes/aliens');
 const connectDB = require('./db/connect');
 require('dotenv').config();
+const notFound = require('./middleware/not-found');
 
 const app = express();
 
@@ -9,7 +10,13 @@ const app = express();
 app.use(express.json());
 
 // routes
+
+app.get('/', (req, res) => {
+  res.status(200).send('<h1>Aliens Management 👽</h1>');
+});
+
 app.use('/api/v1/aliens', aliens);
+app.use(notFound);
 
 const port = process.env.PORT || 3000;
 
