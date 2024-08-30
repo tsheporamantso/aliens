@@ -4,7 +4,7 @@
   "description": "Restful API that collects Web Engineers name, favorite tech stack  and employment status, built with NodeJS, ExpressJS , Non Relational  Database MongoDB and Mongoose Modelling library.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon app.js"
   },
   "keywords": [],
   "author": "",
