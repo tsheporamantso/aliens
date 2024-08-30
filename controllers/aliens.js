@@ -23,7 +23,7 @@ const getAlien = async (req, res) => {
     const { id: alienID } = req.params;
     const alien = await Alien.findOne({ _id: alienID });
     if (alien) {
-      res.status(201).json({ alien });
+      res.status(200).json({ alien });
     } else {
       res.status(404).json({ msg: `No alien with id: ${alienID}` });
     }
@@ -41,7 +41,7 @@ const updateAlien = async (req, res) => {
       runValidators: true,
     });
     if (alien) {
-      res.status(201).json({ alien });
+      res.status(200).json({ alien });
     } else {
       res.status(404).json({ msg: `No alien with id: ${alienID}` });
     }
@@ -55,7 +55,7 @@ const deleteAlien = async (req, res) => {
     const { id: alienID } = req.params;
     const alien = await Alien.findOneAndDelete({ _id: alienID });
     if (alien) {
-      res.status(201).json({ alien });
+      res.status(200).json({ alien });
     } else {
       res.status(404).json({ msg: `No alien with id: ${alienID}` });
     }
