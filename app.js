@@ -10,6 +10,11 @@ const app = express();
 app.use(express.json());
 
 // routes
+
+app.get('/', (req, res) => {
+  res.status(200).send('<h1>Aliens Management 👽</h1>');
+});
+
 app.use('/api/v1/aliens', aliens);
 app.use(notFound);
 
