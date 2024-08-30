@@ -1,7 +1,12 @@
 const Alien = require('../models/alien');
 
-const getAllAliens = (req, res) => {
-  res.status(200).json({ msg: 'Get all aliens' });
+const getAllAliens = async (req, res) => {
+  try {
+    const aliens = await Alien.find({});
+    res.status(200).json({ aliens });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
 };
 
 const createAlien = async (req, res) => {
@@ -13,17 +18,50 @@ const createAlien = async (req, res) => {
   }
 };
 
-const getAlien = (req, res) => {
-  const { id: alien } = req.params;
-  res.status(200).json({ msg: 'Get a single alien', alien });
+const getAlien = async (req, res) => {
+  try {
+    const { id: alienID } = req.params;
+    const alien = await Alien.findOne({ _id: alienID });
+    if (alien) {
+      res.status(201).json({ alien });
+    } else {
+      res.status(404).json({ msg: `No alien with id: ${alienID}` });
+    }
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
 };
 
-const updateAlien = (req, res) => {
-  res.status(200).json({ msg: 'Alien updated' });
+const updateAlien = async (req, res) => {
+  try {
+    const { id: alienID } = req.params;
+    const { body } = req;
+    const alien = await Alien.findOneAndUpdate({ _id: alienID }, body, {
+      new: true,
+      runValidators: true,
+    });
+    if (alien) {
+      res.status(201).json({ alien });
+    } else {
+      res.status(404).json({ msg: `No alien with id: ${alienID}` });
+    }
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
 };
 
-const deleteAlien = (req, res) => {
-  res.status(200).json({ msg: 'Alien deleted' });
+const deleteAlien = async (req, res) => {
+  try {
+    const { id: alienID } = req.params;
+    const alien = await Alien.findOneAndDelete({ _id: alienID });
+    if (alien) {
+      res.status(201).json({ alien });
+    } else {
+      res.status(404).json({ msg: `No alien with id: ${alienID}` });
+    }
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
 };
 
 module.exports = {
