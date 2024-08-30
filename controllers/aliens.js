@@ -1,10 +1,16 @@
+const Alien = require('../models/alien');
+
 const getAllAliens = (req, res) => {
   res.status(200).json({ msg: 'Get all aliens' });
 };
 
-const createAlien = (req, res) => {
-  const alien = req.body;
-  res.status(200).json({ alien });
+const createAlien = async (req, res) => {
+  try {
+    const alien = await Alien.create(req.body);
+    res.status(201).json({ alien });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
 };
 
 const getAlien = (req, res) => {
