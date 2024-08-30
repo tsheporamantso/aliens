@@ -2,6 +2,7 @@ const express = require('express');
 const aliens = require('./routes/aliens');
 const connectDB = require('./db/connect');
 require('dotenv').config();
+const notFound = require('./middleware/not-found');
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.use(express.json());
 
 // routes
 app.use('/api/v1/aliens', aliens);
+app.use(notFound);
 
 const port = process.env.PORT || 3000;
 
