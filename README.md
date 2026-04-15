@@ -4,6 +4,7 @@
 
   <h1><b>ALIEN MANAGEMENT 👽</b></h1>
   <img src ="./image.png" width="900">
+  <img src ="./swagger.png" width="900">
 </div>
 
 <!-- TABLE OF CONTENTS -->
