@@ -1,0 +1,185 @@
+openapi: 3.0.0
+info:
+  title: Aliens API
+  description: RESTful API that collects web engineers' names, favourite tech stack and employment status, built with NodeJS, ExpressJS, Non Relational Database MongoDB and Mongoose Modelling library.
+  contact:
+    name: Gladwin Tshepo Ramantso
+    url: https://gladwinramantso.netlify.app/#home
+    email: tshepo.ramantso@outlook.com
+  version: '1.0'
+servers:
+  - url: http://localhost:3000/api/v1
+    variables: {}
+paths:
+  /aliens:
+    get:
+      tags:
+        - Aliens
+      summary: Get all Aliens
+      operationId: GetallAliens
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+    post:
+      tags:
+        - Aliens
+      summary: Create Alien
+      operationId: CreateAlien
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/CreateAlienRequest'
+                - example:
+                    name: Tshepo Ramantso
+                    tech_Stack:
+                      - JavaScript
+                      - TypeScript
+                      - HTML
+                      - CSS
+                      - React
+                      - NodeJS
+                      - ExpressJS
+                      - Ruby
+                      - Ruby on Rails
+                    isEmployed: true
+            example:
+              name: Tshepo Ramantso
+              tech_Stack:
+                - JavaScript
+                - TypeScript
+                - HTML
+                - CSS
+                - React
+                - NodeJS
+                - ExpressJS
+                - Ruby
+                - Ruby on Rails
+              isEmployed: true
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /aliens/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The alien ID
+    get:
+      tags:
+        - Aliens
+      summary: Get Single Alien
+      operationId: GetSingleAlien
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+    patch:
+      tags:
+        - Aliens
+      summary: Update Alien
+      operationId: UpdateAlien
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/UpdateAlienRequest'
+                - example:
+                    name: Gladwin Tshepo Ramantso
+            example:
+              name: Gladwin Tshepo Ramantso
+              tech_Stack: ['JavaScript', 'TypeScript', 'HTML', 'CSS']
+              isEmployed: false
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+    delete:
+      tags:
+        - Aliens
+      summary: Delete Alien
+      operationId: DeleteAlien
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+components:
+  schemas:
+    CreateAlienRequest:
+      title: CreateAlienRequest
+      required:
+        - name
+        - tech_Stack
+        - isEmployed
+      type: object
+      properties:
+        name:
+          type: string
+        tech_Stack:
+          type: array
+          items:
+            type: string
+          description: ''
+        isEmployed:
+          type: boolean
+      example:
+        name: Tshepo Ramantso
+        tech_Stack:
+          - JavaScript
+          - TypeScript
+          - HTML
+          - CSS
+          - React
+          - NodeJS
+          - ExpressJS
+          - Ruby
+          - Ruby on Rails
+        isEmployed: true
+    UpdateAlienRequest:
+      title: UpdateAlienRequest
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Gladwin Tshepo Ramantso
+    DeleteAlienRequest:
+      title: DeleteAlienRequest
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: Gladwin Tshepo Ramantso
+tags:
+  - name: Aliens
+    description: ''
