@@ -4,11 +4,10 @@ const AlienSchema = new mongoose.Schema({
   name: {
     type: String,
     trim: true,
-    required: [true, 'Must provide name'],
-    maxLength: [20, 'Name cannot be more than  20 characters'],
+    required: [true, 'Please provide name'],
   },
   tech_Stack: {
-    type: String,
+    type: [String],
     required: true,
     trim: true,
   },
