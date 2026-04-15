@@ -66,10 +66,8 @@
 
 ### Key Features <a name="key-features"></a>
 
-- **Model, Views and Controller**
-- **ExpressJS API endpoints**
-- **MongoDB**
-- **Mongoose**
+- **Create, read, update and delete alien records**
+- **Filter aliens by employment status**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
