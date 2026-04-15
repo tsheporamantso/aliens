@@ -5,6 +5,11 @@ require('dotenv').config();
 const notFound = require('./middleware/not-found');
 const cors = require('cors');
 
+const swaggerUI = require('swagger-ui-express');
+const YAML = require('yamljs');
+
+const swaggerDocument = YAML.load('./swagger.yaml');
+
 const app = express();
 
 const allowedOrigins = ['https://editor.swagger.io'];
@@ -31,6 +36,7 @@ app.get('/', (req, res) => {
 
 // routes
 app.use('/api/v1/aliens', aliens);
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // middleware
 app.use(notFound);
