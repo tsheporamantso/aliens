@@ -1,12 +1,11 @@
-const express = require('express');
-const aliens = require('./routes/aliens');
-const connectDB = require('./db/connect');
 require('dotenv').config();
-const notFound = require('./middleware/not-found');
 const cors = require('cors');
-
+const express = require('express');
 const swaggerUI = require('swagger-ui-express');
+const connectDB = require('./db/connect');
+const notFound = require('./middleware/not-found');
 const YAML = require('yamljs');
+const aliens = require('./routes/aliens');
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 
