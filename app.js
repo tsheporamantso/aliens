@@ -3,14 +3,14 @@ const cors = require('cors');
 const express = require('express');
 const swaggerUI = require('swagger-ui-express');
 const YAML = require('yamljs');
+const helmet = require('helmet');
 const connectDB = require('./db/connect');
 const notFound = require('./middleware/not-found');
 const aliens = require('./routes/aliens');
-const errorHandlerMiddleware = require('./middleware/error-handler.js');
+const errorHandlerMiddleware = require('./middleware/error-handler');
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 const limiter = require('./middleware/rate-limiter');
-const helmet = require('helmet');
 
 const app = express();
 
