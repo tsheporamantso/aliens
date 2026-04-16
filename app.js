@@ -9,6 +9,7 @@ const aliens = require('./routes/aliens');
 const errorHandlerMiddleware = require('./middleware/error-handler.js');
 
 const swaggerDocument = YAML.load('./swagger.yaml');
+const limiter = require('./middleware/rate-limiter');
 
 const app = express();
 
@@ -27,6 +28,9 @@ app.use(
 
 // Body parser
 app.use(express.json());
+
+// extra security
+app.use(limiter);
 
 // routes
 app.use('/api/v1/aliens', aliens);
