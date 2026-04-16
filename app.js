@@ -1,12 +1,11 @@
-const express = require('express');
-const aliens = require('./routes/aliens');
-const connectDB = require('./db/connect');
 require('dotenv').config();
-const notFound = require('./middleware/not-found');
 const cors = require('cors');
-
+const express = require('express');
 const swaggerUI = require('swagger-ui-express');
 const YAML = require('yamljs');
+const connectDB = require('./db/connect');
+const notFound = require('./middleware/not-found');
+const aliens = require('./routes/aliens');
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 
@@ -20,7 +19,7 @@ app.use(
       // Allow requests with no origin (curl, Postman, mobile apps)
       if (!origin) return callback(null, true);
       if (allowedOrigins.includes(origin)) return callback(null, true);
-      callback(new Error(`CORS policy: origin ${origin} not allowed`));
+      return callback(new Error(`CORS policy: origin ${origin} not allowed`));
     },
     credentials: true,
   }),
