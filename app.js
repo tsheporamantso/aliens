@@ -12,12 +12,11 @@ const swaggerDocument = YAML.load('./swagger.yaml');
 
 const app = express();
 
-const allowedOrigins = ['https://editor.swagger.io'];
+const allowedOrigins = ['https://editor.swagger.io', 'http://localhost:3000'];
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (curl, Postman, mobile apps)
       if (!origin) return callback(null, true);
       if (allowedOrigins.includes(origin)) return callback(null, true);
       return callback(new Error(`CORS policy: origin ${origin} not allowed`));

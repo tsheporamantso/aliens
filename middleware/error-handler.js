@@ -1,10 +1,19 @@
 const StatusCodes = require('http-status-codes');
 const CustomErrorAPI = require('../errors/custom-error');
+const mongoose = require('mongoose');
 
 const errorHandlerMiddleware = (err, req, res, next) => {
   if (err instanceof CustomErrorAPI) {
     return res.status(err.statusCode).json({ msg: err.message });
   }
+
+  if (err instanceof mongoose.Error.ValidationError) {
+    const message = Object.values(err.errors)
+      .map((e) => e.message)
+      .join(', ');
+    return res.status(StatusCodes.BAD_REQUEST).json({ msg: message });
+  }
+
   if (err.name === 'CastError') {
     return res
       .status(StatusCodes.NOT_FOUND)

@@ -2,9 +2,10 @@
   "name": "aliens",
   "version": "1.0.0",
   "description": "Restful API that collects Web Engineers name, favorite tech stack  and employment status, built with NodeJS, ExpressJS , Non Relational  Database MongoDB and Mongoose Modelling library.",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "prepare": "husky",
     "commit": "cz",
     "lint": "eslint ."
