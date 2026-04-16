@@ -65,10 +65,8 @@
 
 ### Key Features <a name="key-features"></a>
 
-- **Model, Views and Controller**
-- **ExpressJS API endpoints**
-- **MongoDB**
-- **Mongoose**
+- **User Authentication**
+- **CRUD**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -158,7 +156,7 @@ Not deployed
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- [ ] **Add Authentication**
+- [ ] ~~Add Authentication~~
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
