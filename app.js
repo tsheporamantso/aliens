@@ -3,20 +3,22 @@ const cors = require('cors');
 const express = require('express');
 const swaggerUI = require('swagger-ui-express');
 const YAML = require('yamljs');
+const helmet = require('helmet');
 const connectDB = require('./db/connect');
 const notFound = require('./middleware/not-found');
 const aliens = require('./routes/aliens');
+const errorHandlerMiddleware = require('./middleware/error-handler');
 
 const swaggerDocument = YAML.load('./swagger.yaml');
+const limiter = require('./middleware/rate-limiter');
 
 const app = express();
 
-const allowedOrigins = ['https://editor.swagger.io'];
+const allowedOrigins = ['https://editor.swagger.io', 'http://localhost:3000'];
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (curl, Postman, mobile apps)
       if (!origin) return callback(null, true);
       if (allowedOrigins.includes(origin)) return callback(null, true);
       return callback(new Error(`CORS policy: origin ${origin} not allowed`));
@@ -28,10 +30,9 @@ app.use(
 // Body parser
 app.use(express.json());
 
-// routes
-app.get('/', (req, res) => {
-  res.status(200).send('<h1>Aliens Management 👽</h1>');
-});
+// extra security
+app.use(limiter);
+app.use(helmet());
 
 // routes
 app.use('/api/v1/aliens', aliens);
@@ -39,6 +40,7 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // middleware
 app.use(notFound);
+app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 3000;
 
