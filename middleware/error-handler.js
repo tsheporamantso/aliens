@@ -14,6 +14,12 @@ const errorHandlerMiddleware = (err, req, res) => {
     return res.status(StatusCodes.BAD_REQUEST).json({ msg: message });
   }
 
+  if (err.code === 11000) {
+    return res
+      .status(StatusCodes.CONFLICT)
+      .json({ msg: 'Email already in use' });
+  }
+
   if (err.name === 'CastError') {
     return res
       .status(StatusCodes.NOT_FOUND)
