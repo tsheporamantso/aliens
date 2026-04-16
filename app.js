@@ -10,6 +10,7 @@ const errorHandlerMiddleware = require('./middleware/error-handler.js');
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 const limiter = require('./middleware/rate-limiter');
+const helmet = require('helmet');
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use(express.json());
 
 // extra security
 app.use(limiter);
+app.use(helmet());
 
 // routes
 app.use('/api/v1/aliens', aliens);
