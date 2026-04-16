@@ -19,7 +19,7 @@ app.use(
       // Allow requests with no origin (curl, Postman, mobile apps)
       if (!origin) return callback(null, true);
       if (allowedOrigins.includes(origin)) return callback(null, true);
-      callback(new Error(`CORS policy: origin ${origin} not allowed`));
+      return callback(new Error(`CORS policy: origin ${origin} not allowed`));
     },
     credentials: true,
   }),
