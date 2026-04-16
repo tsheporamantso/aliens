@@ -6,6 +6,7 @@ const YAML = require('yamljs');
 const connectDB = require('./db/connect');
 const notFound = require('./middleware/not-found');
 const aliens = require('./routes/aliens');
+const errorHandlerMiddleware = require('./middleware/error-handler.js');
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 
@@ -29,16 +30,12 @@ app.use(
 app.use(express.json());
 
 // routes
-app.get('/', (req, res) => {
-  res.status(200).send('<h1>Aliens Management 👽</h1>');
-});
-
-// routes
 app.use('/api/v1/aliens', aliens);
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // middleware
 app.use(notFound);
+app.use(errorHandlerMiddleware);
 
 const port = process.env.PORT || 3000;
 
