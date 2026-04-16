@@ -7,6 +7,7 @@ const helmet = require('helmet');
 const connectDB = require('./db/connect');
 const notFound = require('./middleware/not-found');
 const aliens = require('./routes/aliens');
+const authRouter = require('./routes/auth');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
 const swaggerDocument = YAML.load('./swagger.yaml');
@@ -36,6 +37,9 @@ app.use(helmet());
 
 // routes
 app.use('/api/v1/aliens', aliens);
+app.use('/api/v1/auth', authRouter);
+
+// swagger doc
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // middleware
