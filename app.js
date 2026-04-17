@@ -10,6 +10,7 @@ const aliens = require('./routes/aliens');
 const authRouter = require('./routes/auth');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 const authentication = require('./middleware/authentication');
+
 const swaggerDocument = YAML.load('./swagger.yaml');
 const limiter = require('./middleware/rate-limiter');
 
