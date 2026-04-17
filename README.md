@@ -4,6 +4,7 @@
 
   <h1><b>ALIEN MANAGEMENT 👽</b></h1>
   <img src ="./image.png" width="900">
+  <img src ="./swagger.png" width="900">
 </div>
 
 <!-- TABLE OF CONTENTS -->
@@ -65,8 +66,8 @@
 
 ### Key Features <a name="key-features"></a>
 
-- **User Authentication**
-- **CRUD**
+- **Create, read, update and delete alien records**
+- **Filter aliens by employment status**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
