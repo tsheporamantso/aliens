@@ -2,7 +2,7 @@ const StatusCodes = require('http-status-codes');
 const mongoose = require('mongoose');
 const CustomErrorAPI = require('../errors/custom-error');
 
-const errorHandlerMiddleware = (err, req, res) => {
+const errorHandlerMiddleware = (err, req, res, _next) => {
   if (err instanceof CustomErrorAPI) {
     return res.status(err.statusCode).json({ msg: err.message });
   }
@@ -12,6 +12,12 @@ const errorHandlerMiddleware = (err, req, res) => {
       .map((e) => e.message)
       .join(', ');
     return res.status(StatusCodes.BAD_REQUEST).json({ msg: message });
+  }
+
+  if (err.code === 11000) {
+    return res
+      .status(StatusCodes.CONFLICT)
+      .json({ msg: `Email: ${Object.values(err.keyValue)}, already in use` });
   }
 
   if (err.name === 'CastError') {

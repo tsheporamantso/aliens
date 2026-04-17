@@ -7,7 +7,9 @@ const helmet = require('helmet');
 const connectDB = require('./db/connect');
 const notFound = require('./middleware/not-found');
 const aliens = require('./routes/aliens');
+const authRouter = require('./routes/auth');
 const errorHandlerMiddleware = require('./middleware/error-handler');
+const authentication = require('./middleware/authentication');
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 const limiter = require('./middleware/rate-limiter');
@@ -35,7 +37,10 @@ app.use(limiter);
 app.use(helmet());
 
 // routes
-app.use('/api/v1/aliens', aliens);
+app.use('/api/v1/aliens', authentication, aliens);
+app.use('/api/v1/auth', authRouter);
+
+// swagger doc
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // middleware
@@ -47,7 +52,9 @@ const port = process.env.PORT || 3000;
 const start = async () => {
   try {
     await connectDB(process.env.MONGO_URI);
-    app.listen(port, console.log(`Server is listening on port ${port} `));
+    app.listen(port, () => {
+      console.log(`Server is listening on port ${port}...`);
+    });
   } catch (error) {
     console.log(error);
   }
