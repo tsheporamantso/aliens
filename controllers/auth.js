@@ -1,7 +1,7 @@
-const asyncWrapper = require('../middleware/async');
 const StatusCodes = require('http-status-codes');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+const asyncWrapper = require('../middleware/async');
 const BadRequestError = require('../errors/bad-request');
 const UnauthenticatedError = require('../errors/unauthenticated');
 
