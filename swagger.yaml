@@ -8,7 +8,7 @@ info:
     email: tshepo.ramantso@outlook.com
   version: '1.0'
 servers:
-  - url: http://localhost:3000/api/v1
+  - url: https://aliens-zchg.onrender.com/api-docs/
     variables: {}
 paths:
   /aliens:
