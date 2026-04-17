@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Aliens API
-  description: RESTful API that collects web engineers' names, favourite tech stack and employment status, built with NodeJS, ExpressJS, Non Relational Database MongoDB and Mongoose Modelling library.
+  description: RESTful API that collects Web Engineers' name, favourite tech stack and employment status, built with NodeJS, ExpressJS, Non Relational Database MongoDB and Mongoose Modelling library.
   contact:
     name: Gladwin Tshepo Ramantso
     url: https://gladwinramantso.netlify.app/#home
@@ -23,7 +23,8 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-      security: []
+      security:
+        - bearer: []
     post:
       tags:
         - Aliens
@@ -38,30 +39,24 @@ paths:
               allOf:
                 - $ref: '#/components/schemas/CreateAlienRequest'
                 - example:
-                    name: Tshepo Ramantso
+                    name: Panky
                     tech_Stack:
                       - JavaScript
                       - TypeScript
                       - HTML
                       - CSS
-                      - React
-                      - NodeJS
-                      - ExpressJS
-                      - Ruby
-                      - Ruby on Rails
+                      - Technical drawing
+                      - UI/UX design
                     isEmployed: true
             example:
-              name: Tshepo Ramantso
+              name: Panky
               tech_Stack:
                 - JavaScript
                 - TypeScript
                 - HTML
                 - CSS
-                - React
-                - NodeJS
-                - ExpressJS
-                - Ruby
-                - Ruby on Rails
+                - Technical drawing
+                - UI/UX design
               isEmployed: true
         required: true
       responses:
@@ -69,7 +64,8 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-      security: []
+      security:
+        - bearer: []
   /aliens/{id}:
     parameters:
       - in: path
@@ -89,7 +85,8 @@ paths:
           description: ''
           headers: {}
       deprecated: false
-      security: []
+      security:
+        - bearer: []
     patch:
       tags:
         - Aliens
@@ -104,11 +101,52 @@ paths:
               allOf:
                 - $ref: '#/components/schemas/UpdateAlienRequest'
                 - example:
-                    name: Gladwin Tshepo Ramantso
+                    name: Dumisani Ramantso
             example:
-              name: Gladwin Tshepo Ramantso
-              tech_Stack: ['JavaScript', 'TypeScript', 'HTML', 'CSS']
-              isEmployed: false
+              name: Dumisani Ramantso
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    delete:
+      tags:
+        - Aliens
+      summary: Delete Alien
+      operationId: DeleteAlien
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register User
+      operationId: RegisterUser
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/RegisterUserRequest'
+                - example:
+                    name: dumisani
+                    email: dumisani668@gmail.com
+                    password: password123
+            example:
+              name: dumisani
+              email: dumisani668@gmail.com
+              password: password123
         required: true
       responses:
         '200':
@@ -116,12 +154,27 @@ paths:
           headers: {}
       deprecated: false
       security: []
-    delete:
+  /auth/login:
+    post:
       tags:
-        - Aliens
-      summary: Delete Alien
-      operationId: DeleteAlien
+        - Auth
+      summary: Login User
+      operationId: LoginUser
       parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/LoginUserRequest'
+                - example:
+                    email: dumisani668@gmail.com
+                    password: password123
+            example:
+              email: dumisani668@gmail.com
+              password: password123
+        required: true
       responses:
         '200':
           description: ''
@@ -148,17 +201,14 @@ components:
         isEmployed:
           type: boolean
       example:
-        name: Tshepo Ramantso
+        name: Panky
         tech_Stack:
           - JavaScript
           - TypeScript
           - HTML
           - CSS
-          - React
-          - NodeJS
-          - ExpressJS
-          - Ruby
-          - Ruby on Rails
+          - Technical drawing
+          - UI/UX design
         isEmployed: true
     UpdateAlienRequest:
       title: UpdateAlienRequest
@@ -169,17 +219,46 @@ components:
         name:
           type: string
       example:
-        name: Gladwin Tshepo Ramantso
-    DeleteAlienRequest:
-      title: DeleteAlienRequest
+        name: Dumisani Ramantso
+    RegisterUserRequest:
+      title: RegisterUserRequest
       required:
         - name
+        - email
+        - password
       type: object
       properties:
         name:
           type: string
+        email:
+          type: string
+        password:
+          type: string
       example:
-        name: Gladwin Tshepo Ramantso
+        name: dumisani
+        email: dumisani668@gmail.com
+        password: password123
+    LoginUserRequest:
+      title: LoginUserRequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: dumisani668@gmail.com
+        password: password123
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
 tags:
+  - name: Auth
+    description: ''
   - name: Aliens
     description: ''
