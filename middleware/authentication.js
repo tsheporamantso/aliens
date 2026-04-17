@@ -13,7 +13,7 @@ const authentication = async (req, res, next) => {
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
     req.user = { userId: payload._id, name: payload.name };
-    next();
+    return next();
   } catch (error) {
     return next(new UnauthenticatedError('Authentication invalid'));
   }
