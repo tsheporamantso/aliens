@@ -8,9 +8,9 @@ info:
     email: tshepo.ramantso@outlook.com
   version: '1.0'
 servers:
-  - url: https://aliens-zchg.onrender.com
+  - url: https://aliens-zchg.onrender.com/api/v1
     description: Production server
-  - url: http://localhost:3000
+  - url: http://localhost:3000/api/v1
     description: Local development server
     variables: {}
 paths:
