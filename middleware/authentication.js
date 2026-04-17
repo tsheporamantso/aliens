@@ -12,7 +12,6 @@ const authentication = async (req, res, next) => {
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-    // eslint-disable-line no-underscore-dangle
     req.user = { userId: payload._id, name: payload.name };
     return next();
   } catch (error) {
