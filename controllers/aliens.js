@@ -1,6 +1,6 @@
+const StatusCodes = require('http-status-codes');
 const Alien = require('../models/alien');
 const asyncWrapper = require('../middleware/async');
-const StatusCodes = require('http-status-codes');
 const NotFoundError = require('../errors/not-found');
 
 const getAllAliens = asyncWrapper(async (req, res) => {
