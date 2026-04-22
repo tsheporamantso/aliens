@@ -10,6 +10,7 @@ const aliens = require('./routes/aliens');
 const authRouter = require('./routes/auth');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 const authentication = require('./middleware/authentication');
+const morgan = require('morgan');
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 const limiter = require('./middleware/rate-limiter');
@@ -31,6 +32,8 @@ app.use(
 
 // Body parser
 app.use(express.json());
+
+app.use(morgan('tiny'));
 
 // extra security
 app.use(limiter);
