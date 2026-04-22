@@ -35,7 +35,7 @@ app.use(
 app.use(express.json());
 
 app.use(morgan('tiny'));
-app.use(cookieParser());
+app.use(cookieParser(process.env.JWT_SECRET));
 
 // extra security
 app.use(limiter);
