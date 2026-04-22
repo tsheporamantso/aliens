@@ -12,7 +12,9 @@ const register = asyncWrapper(async (req, res) => {
   const user = await User.create({ ...req.body, role });
   const token = user.createJWT();
 
-  res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token });
+  res
+    .status(StatusCodes.CREATED)
+    .json({ user: { name: user.name, role: user.role }, token });
 });
 
 const login = asyncWrapper(async (req, res) => {
