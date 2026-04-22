@@ -3,7 +3,7 @@ const User = require('../models/User');
 const asyncWrapper = require('../middleware/async');
 const BadRequestError = require('../errors/bad-request');
 const UnauthenticatedError = require('../errors/unauthenticated');
-const cookies = require('../utils/cookies');
+const attachCookiesToResponse = require('../utils/cookies');
 
 const register = asyncWrapper(async (req, res) => {
   // first registered user will be admin
