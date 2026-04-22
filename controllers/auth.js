@@ -6,14 +6,14 @@ const UnauthenticatedError = require('../errors/unauthenticated');
 const cookies = require('../utils/cookies');
 
 const register = asyncWrapper(async (req, res) => {
-  // first register user as admin
+  // first registered user will be admin
   const isFirstAccount = (await User.countDocuments({})) === 0;
   const role = isFirstAccount ? 'admin' : 'user';
 
   const user = await User.create({ ...req.body, role });
   const token = user.createJWT();
 
-  cookies(res, token);
+  attachCookiesToResponse(res, token);
 
   res.status(StatusCodes.CREATED).json({
     user: {
@@ -44,7 +44,7 @@ const login = asyncWrapper(async (req, res) => {
 
   const token = user.createJWT();
 
-  cookies(res, token);
+  attachCookiesToResponse(res, token);
 
   res
     .status(StatusCodes.OK)

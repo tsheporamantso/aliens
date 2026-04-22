@@ -1,4 +1,4 @@
-const cookies = (response, token) => {
+const attachCookiesToResponse = (response, token) => {
   const oneDay = 1000 * 60 * 60 * 24;
 
   return response.cookie('token', token, {
@@ -7,4 +7,4 @@ const cookies = (response, token) => {
   });
 };
 
-module.exports = cookies;
+module.exports = attachCookiesToResponse;
