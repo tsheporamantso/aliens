@@ -3,6 +3,7 @@ const User = require('../models/User');
 const asyncWrapper = require('../middleware/async');
 const BadRequestError = require('../errors/bad-request');
 const UnauthenticatedError = require('../errors/unauthenticated');
+const cookies = require('../utils/cookies');
 
 const register = asyncWrapper(async (req, res) => {
   // first register user as admin
@@ -12,9 +13,14 @@ const register = asyncWrapper(async (req, res) => {
   const user = await User.create({ ...req.body, role });
   const token = user.createJWT();
 
-  res
-    .status(StatusCodes.CREATED)
-    .json({ user: { name: user.name, role: user.role }, token });
+  cookies(res, token);
+
+  res.status(StatusCodes.CREATED).json({
+    user: {
+      name: user.name.charAt(0).toUpperCase() + user.name.slice(1),
+      role: user.role,
+    },
+  });
 });
 
 const login = asyncWrapper(async (req, res) => {
@@ -38,7 +44,11 @@ const login = asyncWrapper(async (req, res) => {
 
   const token = user.createJWT();
 
-  res.status(StatusCodes.OK).json({ user: { name: user.name }, token });
+  cookies(res, token);
+
+  res
+    .status(StatusCodes.OK)
+    .json({ user: { name: user.name, role: user.role } });
 });
 
 module.exports = {
