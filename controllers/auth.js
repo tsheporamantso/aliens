@@ -5,7 +5,11 @@ const BadRequestError = require('../errors/bad-request');
 const UnauthenticatedError = require('../errors/unauthenticated');
 
 const register = asyncWrapper(async (req, res) => {
-  const user = await User.create({ ...req.body });
+  // first register user as admin
+  const isFirstAccount = (await User.countDocuments({})) === 0;
+  const role = isFirstAccount ? 'admin' : 'user';
+
+  const user = await User.create({ ...req.body, role });
   const token = user.createJWT();
 
   res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token });
