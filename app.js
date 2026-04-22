@@ -11,6 +11,7 @@ const authRouter = require('./routes/auth');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 const authentication = require('./middleware/authentication');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 const limiter = require('./middleware/rate-limiter');
@@ -34,6 +35,7 @@ app.use(
 app.use(express.json());
 
 app.use(morgan('tiny'));
+app.use(cookieParser());
 
 // extra security
 app.use(limiter);
