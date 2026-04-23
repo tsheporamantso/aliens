@@ -4,14 +4,14 @@ const express = require('express');
 const swaggerUI = require('swagger-ui-express');
 const YAML = require('yamljs');
 const helmet = require('helmet');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 const connectDB = require('./db/connect');
 const notFound = require('./middleware/not-found');
 const aliens = require('./routes/aliens');
 const authRouter = require('./routes/auth');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 const authentication = require('./middleware/authentication');
-const morgan = require('morgan');
-const cookieParser = require('cookie-parser');
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 const limiter = require('./middleware/rate-limiter');
