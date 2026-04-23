@@ -1,29 +1,41 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const validator = require('validator');
 
-const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, 'Please provide name'],
-    minLength: 3,
-    maxLength: 50,
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: [true, 'Please provide name'],
+      minLength: 3,
+      maxLength: 50,
+    },
+    email: {
+      type: String,
+      required: [true, 'Please provide email'],
+      validate: {
+        validator: validator.isEmail,
+        message: 'Please provide a valid email',
+      },
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: [true, 'Please provide password'],
+      minLength: 6,
+    },
+    role: {
+      type: String,
+      enum: {
+        values: ['admin', 'user'],
+        message: '{VALUE} is not supported',
+      },
+      default: 'user',
+    },
   },
-  email: {
-    type: String,
-    required: [true, 'Please provide email'],
-    match: [
-      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      'Please provide a valid email address',
-    ],
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: [true, 'Please provide password'],
-    minLength: 6,
-  },
-});
+  { timestamps: true },
+);
 
 userSchema.pre('save', async function () {
   const salt = await bcrypt.genSalt(10);
@@ -32,7 +44,7 @@ userSchema.pre('save', async function () {
 
 userSchema.methods.createJWT = function () {
   return jwt.sign(
-    { userId: this._id, name: this.name }, // eslint-disable-line no-underscore-dangle
+    { userId: this._id, name: this.name, role: this.role },
     process.env.JWT_SECRET,
     {
       expiresIn: process.env.JWT_EXPIRES_IN,

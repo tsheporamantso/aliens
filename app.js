@@ -4,6 +4,8 @@ const express = require('express');
 const swaggerUI = require('swagger-ui-express');
 const YAML = require('yamljs');
 const helmet = require('helmet');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 const connectDB = require('./db/connect');
 const notFound = require('./middleware/not-found');
 const aliens = require('./routes/aliens');
@@ -31,6 +33,9 @@ app.use(
 
 // Body parser
 app.use(express.json());
+
+app.use(morgan('tiny'));
+app.use(cookieParser(process.env.JWT_SECRET));
 
 // extra security
 app.use(limiter);
