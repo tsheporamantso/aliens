@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const UnauthenticatedError = require('../errors/unauthenticated');
 
 const authentication = async (req, res, next) => {
-  const token = req.signedCookies.token;
+  const { token } = req.signedCookies;
 
   if (!token) {
     return next(new UnauthenticatedError('Authentication invalid'));
