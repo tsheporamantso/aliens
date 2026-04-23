@@ -44,7 +44,7 @@ userSchema.pre('save', async function () {
 
 userSchema.methods.createJWT = function () {
   return jwt.sign(
-    { userId: this._id, name: this.name, role: this.role }, // eslint-disable-line no-underscore-dangle
+    { userId: this._id, name: this.name, role: this.role },
     process.env.JWT_SECRET,
     {
       expiresIn: process.env.JWT_EXPIRES_IN,
