@@ -40,7 +40,7 @@ app.use(cookieParser(process.env.JWT_SECRET));
 
 // extra security
 app.use(limiter);
-app.use(helmet());
+app.use(helmet.default());
 
 // routes
 app.use('/api/v1/aliens', authentication, aliens);
