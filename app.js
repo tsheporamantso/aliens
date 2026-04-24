@@ -10,6 +10,7 @@ const connectDB = require('./db/connect');
 const notFound = require('./middleware/not-found');
 const aliens = require('./routes/aliens');
 const authRouter = require('./routes/auth');
+const userRouter = require('./routes/userRoutes');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 const authentication = require('./middleware/authentication');
 
@@ -44,6 +45,7 @@ app.use(helmet());
 // routes
 app.use('/api/v1/aliens', authentication, aliens);
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/users', userRouter);
 
 // swagger doc
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
