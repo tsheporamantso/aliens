@@ -12,7 +12,7 @@ const aliens = require('./routes/aliens');
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/userRoutes');
 const errorHandlerMiddleware = require('./middleware/error-handler');
-const authentication = require('./middleware/authentication');
+const { authenticateUser } = require('./middleware/authentication');
 
 const swaggerDocument = YAML.load('./swagger.yaml');
 const limiter = require('./middleware/rate-limiter');
@@ -43,7 +43,7 @@ app.use(limiter);
 app.use(helmet.default());
 
 // routes
-app.use('/api/v1/aliens', authentication, aliens);
+app.use('/api/v1/aliens', authenticateUser, aliens);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/users', userRouter);
 
