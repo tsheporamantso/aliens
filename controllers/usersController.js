@@ -3,6 +3,7 @@ const CustomError = require('../errors');
 const StatusCodes = require('http-status-codes');
 const asyncWrapper = require('../middleware/async');
 const attachCookiesToResponse = require('../utils/cookies');
+const checkPermission = require('../utils/checkPermission');
 
 const getAllUsers = asyncWrapper(async (req, res) => {
   const users = await User.find({ role: 'user' }).select('-password');
@@ -16,6 +17,9 @@ const getSingleUser = asyncWrapper(async (req, res) => {
   if (!user) {
     throw new CustomError.NotFoundError(`No user with id: ${userId}`);
   }
+
+  checkPermission(req.user, user._id);
+
   res.status(StatusCodes.OK).json({ user });
 });
 
