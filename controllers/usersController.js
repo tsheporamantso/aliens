@@ -27,9 +27,7 @@ const updateUser = asyncWrapper(async (req, res) => {
   const { name, email } = req.body;
 
   if (!name || !email) {
-    throw new CustomError.BadRequestError(
-      'Please provide both value. i.e. name and email',
-    );
+    throw new CustomError.BadRequestError('Please provide both name and email');
   }
   const user = await User.findOneAndUpdate(
     { _id: req.user.userId },
