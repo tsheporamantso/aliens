@@ -1,26 +1,76 @@
+const User = require('../models/User');
+const CustomError = require('../errors');
 const StatusCodes = require('http-status-codes');
-const NotFoundError = require('../errors/not-found');
-const BadRequestError = require('../errors/bad-request');
 const asyncWrapper = require('../middleware/async');
+const attachCookiesToResponse = require('../utils/cookies');
 
 const getAllUsers = asyncWrapper(async (req, res) => {
-  res.status(StatusCodes.OK).json('get all users');
+  const users = await User.find({ role: 'user' }).select('-password');
+  res.status(StatusCodes.OK).json({ users });
 });
 
 const getSingleUser = asyncWrapper(async (req, res) => {
-  res.status(StatusCodes.OK).json('get a single users');
+  const { id: userId } = req.params;
+  const user = await User.findOne({ _id: userId }).select('-password');
+
+  if (!user) {
+    throw new CustomError.NotFoundError(`No user with id: ${userId}`);
+  }
+  res.status(StatusCodes.OK).json({ user });
 });
 
 const showCurrentUser = asyncWrapper(async (req, res) => {
-  res.status(StatusCodes.OK).json('show current users');
+  res.status(StatusCodes.OK).json({ user: req.user });
 });
 
 const updateUser = asyncWrapper(async (req, res) => {
-  res.status(StatusCodes.OK).json('update user');
+  const { name, email } = req.body;
+
+  if (!name || !email) {
+    throw new CustomError.BadRequestError(
+      'Please provide both value. i.e. name and email',
+    );
+  }
+  const user = await User.findOneAndUpdate(
+    { _id: req.user.userId },
+    { name, email },
+    {
+      returnDocument: 'after',
+      runValidators: true,
+    },
+  );
+
+  const token = user.createJWT();
+  attachCookiesToResponse(res, token);
+
+  res.status(StatusCodes.OK).json({
+    user: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    },
+  });
 });
 
 const updateUserPassword = asyncWrapper(async (req, res) => {
-  res.status(StatusCodes.OK).json('update user password');
+  const { oldPassword, newPassword } = req.body;
+
+  if (!oldPassword || !newPassword) {
+    throw new CustomError.BadRequestError('Please provide both values');
+  }
+
+  const user = await User.findOne({ _id: req.user.userId });
+  const isPasswordCorrect = await user.comparePassword(oldPassword);
+
+  if (!isPasswordCorrect) {
+    throw new CustomError.UnauthenticatedError('Invalid credentials');
+  }
+
+  user.password = newPassword;
+  await user.save();
+
+  res.status(StatusCodes.OK).json({ msg: 'Password updated' });
 });
 
 module.exports = {
