@@ -1,6 +1,6 @@
+const StatusCodes = require('http-status-codes');
 const User = require('../models/User');
 const CustomError = require('../errors');
-const StatusCodes = require('http-status-codes');
 const asyncWrapper = require('../middleware/async');
 const attachCookiesToResponse = require('../utils/cookies');
 const checkPermission = require('../utils/checkPermission');
